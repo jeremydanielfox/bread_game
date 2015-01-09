@@ -3,7 +3,7 @@ game
 
 First project for CompSci 308 Spring 2015
 
-Name: 
+Name: Jeremy Fox
 
 Date started:
 
