@@ -5,7 +5,7 @@ First project for CompSci 308 Spring 2015
 
 Name: Jeremy Fox
 
-Date started:
+Date started: January 9, 2014
 
 Date finished:
 
