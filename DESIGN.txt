@@ -1,18 +1,43 @@
 Genre: Top down scroller, similar to Galaga
 
-This game will be called Bread First Search. Although it will appeal to players of all ages, it will hold special meaning to computer scientists, who will chuckle at the resemblence to the algorithm Breadth First Search. The backstory goes as follows:
+This game will be called Bread First Search. Although it will appeal to players of all ages, 
+it will hold special meaning to computer scientists, who will chuckle at the resemblence to the 
+algorithm Breadth First Search. The backstory goes as follows:
 	
-	Madeline, a small girl, has been kidnapped by a fleet of aliens! Luckily, Madeline has been studying both jujitsu and astrophysics since the age of two. She's smart, and she lies in wait until her moment strikes. The aliens are loading her into the cargo hold on the mothersbip when she seizes her opportunity, stomping on the tentacle of the alien holding her and hip throwing it into a nearby airlock. She lashes out at the other alien, poking it in its single eyeball and grabbing its stun gun. Madeline quickly blasts all the aliens near her and sprints across the deck of the space ship, heading to the command center. As she runs, however, she feels fatigued. As her stomach rumbles, Madeline realizes she hasn't eaten in days. "Oh well," she thinks. "I have some Bread in my pantry. I can eat when I get home." With that thought in mind, Madeline hacks into the ships navigation and steers it back to Earth.
+	Madeline, a small girl, has been kidnapped by a fleet of aliens! Luckily, Madeline has been studying 
+	both jujitsu and astrophysics since the age of two. She's smart, and she lies in wait until her 
+	moment strikes. The aliens are loading her into the cargo hold on the mothersbip when she seizes 
+	her opportunity, stomping on the tentacle of the alien holding her and hip throwing it into a nearby 
+	airlock. She lashes out at the other alien, poking it in its single eyeball and grabbing its stun gun. 
+	Madeline quickly blasts all the aliens near her and sprints across the deck of the space ship, heading
+	to the command center. As she runs, however, she feels fatigued. As her stomach rumbles, Madeline 
+	realizes she hasn't eaten in days. "Oh well," she thinks. "I have some Bread in my pantry. I can eat
+	when I get home." With that thought in mind, Madeline hacks into the ships navigation and steers it
+	back to Earth.
 
-	As she flies back to Earth, however, Madeline realizes that she is flying straight into another alien fleet! They're shooting at her and trying to blow up the ship! She starts firing back, when she sees something strange floating outside the window. "Is that Sara Lee?" she asks herself? With a swerve, she maneuvers the ship closer. "It is!" she exclaims! "This must be the fabled Bread Belt."
+	As she flies back to Earth, however, Madeline realizes that she is flying straight into another 
+	alien fleet! They're shooting at her and trying to blow up the ship! She starts firing back, when 
+	she sees something strange floating outside the window. "Is that Sara Lee?" she asks herself? With 
+	a swerve, she maneuvers the ship closer. "It is!" she exclaims! "This must be the fabled Bread Belt."
 
-	Madeline realizes that she is flying through a field of Bread, and, although the aliens are dangerous, the Bread is much more tempting. She is pretty hungry, after all. She decides that she will collect the Bread whenever possible. After all, who knows what she can do with a full stomach?
+	Madeline realizes that she is flying through a field of Bread, and, although the aliens are 
+	dangerous, the Bread is much more tempting. She is pretty hungry, after all. She decides that she 
+	will collect the Bread whenever possible. After all, who knows what she can do with a full stomach?
 
-Goal: Make it back to Earth. After a certain amount of time, Madeline will fly into Earth's orbit, where the aliens will be unable to pursue her. This will be represented in the game as a timer. Once the timer expires, Madeline has arrived at Earth, and the player has won the game.
+Goal: Make it back to Earth. After a certain amount of time, Madeline will fly into Earth's orbit, 
+where the aliens will be unable to pursue her. This will be represented in the game as a timer. Once 
+the timer expires, Madeline has arrived at Earth, and the player has won the game.
 
-Basic mechanics: Similar to Galaga, the player will operate a spacecraft fixed at the bottom of the screen. The player will be able to move the spacecraft left and right with the arrow keys, and shoot with the spacebar. Enemy spacecraft enter through the top of the screen and fly towards Madeline. She must shoot them before they crash into her. There will also be Bread that comes down from the top of the screen. The Bread functions as a powerup, and she should collect it, because it will definitely help.
+Basic mechanics: Similar to Galaga, the player will operate a spacecraft fixed at the bottom of the 
+screen. The player will be able to move the spacecraft left and right with the arrow keys, and shoot 
+with the spacebar. Enemy spacecraft enter through the top of the screen and fly towards Madeline. She 
+must shoot them before they crash into her. There will also be Bread that comes down from the top of 
+the screen. The Bread functions as a powerup, and she should collect it, because it will definitely help.
 
-The levels will differ primarily in the enemy algorithms, as they will be smarter and more effective in the second level. In the first level, for example, the enemies may just fly in a straight path down the screen, while in the second level, the may fly toward Madeline. In the second level, enemies may also gain the ability to shoot back at Madeline.
+The levels will differ primarily in the enemy algorithms, as they will be smarter and more 
+effective in the second level. In the first level, for example, the enemies may just fly in a straight 
+path down the screen, while in the second level, the may fly toward Madeline. In the second level, 
+enemies may also gain the ability to shoot back at Madeline.
 
 
 
