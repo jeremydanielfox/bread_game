@@ -2,25 +2,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
-public class Player extends Circle {
-	private static final int PLAYER_SIZE = 20;
-	private static final int PLAYER_SPEED = 8;
-	private static Color PLAYER_COLOR = Color.RED;
+public class Player extends GameObject {
 	
 	Player() {
-		setRadius(PLAYER_SIZE);
+		SIZE = 20;
+		SPEED = 20;
+		COLOR = Color.RED;
+		setRadius(SIZE);
 		setCenterX(250);
 		setCenterY(480);
-		setFill(PLAYER_COLOR);
+		setFill(COLOR);
 		
 	}
 	
 	Player(int XPosition,int YPosition) {
-		setRadius(PLAYER_SIZE);
+		SIZE = 20;
+		SPEED = 20;
+		COLOR = Color.RED;
+		setRadius(SIZE);
 		setCenterX(setPlayerXPosition(XPosition));
 		setCenterY(setPlayerYPosition(YPosition));
-		setFill(PLAYER_COLOR);
-		
+		setFill(COLOR);
 	}
 	
 	
@@ -29,12 +31,9 @@ public class Player extends Circle {
 	}
 	
 	public int setPlayerYPosition (int height) {
-		return height - PLAYER_SIZE;
+		return height - SIZE;
 	}
-	
-	public int getSpeed() {
-		return PLAYER_SPEED;
-	}
+
 	
 
 }

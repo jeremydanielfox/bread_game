@@ -2,12 +2,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
-public class BasicEnemy extends Circle {
-	private static final int SPEED = 3;
-	private static final int SIZE = 10;
-	private static Color COLOR = Color.BLUE;
+public class BasicEnemy extends GameObject  {
+	
 	
 	BasicEnemy() {
+	SIZE = 10;
+	SPEED = 3;
+	COLOR = Color.BLUE;
 		setRadius(SIZE);
 		setCenterX(250);
 		setCenterY(0);
@@ -15,21 +16,13 @@ public class BasicEnemy extends Circle {
 	}
 	
 	BasicEnemy(int XPosition, int YPosition) {
+		SIZE = 10;
+		SPEED = 3;
+		COLOR = Color.BLUE;
 		setRadius(SIZE);
 		setCenterX(XPosition);
 		setCenterY(YPosition);
 		setFill(COLOR);
 	}
-	
-	public int getSpeed() {
-		return SPEED;
-	}
-	
-	public boolean isTimeForEnemy(int counter) {
-		if (counter%180 == 0)
-			return true;
-		return false;
-	}
-	
-	
+
 }
