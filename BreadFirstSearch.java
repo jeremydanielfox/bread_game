@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javafx.animation.KeyFrame;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -24,10 +26,15 @@ public class BreadFirstSearch {
 	private Scene myScene;
 	private Group myRoot;
 	private Player myPlayer;
-	private Collection<BasicEnemy> myEnemies = new ArrayList<BasicEnemy>();
-	private Collection<Projectile> myProjectiles = new ArrayList<Projectile>();
+	private Earth myEarth;
+	private Collection<BasicEnemy> myBasicEnemies = new CopyOnWriteArrayList<BasicEnemy>();
+	private Collection<AdvancedEnemy> myAdvancedEnemies = new CopyOnWriteArrayList<AdvancedEnemy>();
+	private Collection<Projectile> myProjectiles = new CopyOnWriteArrayList<Projectile>();
+	
 	private Random myRandom = new Random();
-
+	private boolean isGameOver = false;
+	private Timers t = new Timers();
+	
 
 
 	/**
@@ -66,35 +73,36 @@ public class BreadFirstSearch {
 	private int myCounter = 0;
 
 	private void updateSprites() {
-		//potentially generate more enemies
-		if (isTimeForEnemy(myCounter))
-			generateEnemy();
-		//move all enemies down
-		for (BasicEnemy current: myEnemies) {
-			current.setCenterY(current.getCenterY() + current.getSpeed());
+		generateObjects();
+		moveObjects();
+		checkAllCollisions();
+		killOffScreenObjects();
+		cleanUpDeadSprites();
+		myCounter++;
+	}
 
-		}
-		//move projectiles
-		for (Projectile current: myProjectiles) {
-			current.setCenterY(current.getCenterY() - current.getSpeed());
-		}
-		//check for collisions
-		for (BasicEnemy current: myEnemies) {
+	/**
+	 * 
+	 */
+	public void checkAllCollisions() {
+		for (BasicEnemy current: myBasicEnemies) {
 			checkCollide(myPlayer,current);
 		}
-		for (BasicEnemy currentEnemy: myEnemies) {
+		for (BasicEnemy currentEnemy: myBasicEnemies) {
 			for (Projectile currentProjectile: myProjectiles) {
 				checkCollide(currentEnemy,currentProjectile);
 			}
 		}
+	}
 
-		killOffScreenObjects();
-
-		//clean up dead sprites
-		for (BasicEnemy current: myEnemies)
+	/**
+	 * 
+	 */
+	public void cleanUpDeadSprites() {
+		for (BasicEnemy current: myBasicEnemies)
 			if (current.isDead()) {
 				myRoot.getChildren().remove(current);
-				myEnemies.remove(current);
+				myBasicEnemies.remove(current);
 			}
 		for (Projectile current: myProjectiles) 
 			if (current.isDead()) {
@@ -104,7 +112,45 @@ public class BreadFirstSearch {
 
 		if (myPlayer.isDead())
 			myRoot.getChildren().remove(myPlayer);
-		myCounter++;
+	}
+
+	/**
+	 * 
+	 */
+	public void moveObjects() {
+		for (BasicEnemy current: myBasicEnemies) {
+			current.setCenterY(current.getCenterY() + current.getSpeed());
+		}
+		// move advanced enemies
+		for (AdvancedEnemy current: myAdvancedEnemies) {
+			current.setDestination(myPlayer.getLocation());
+			Point2D velocity = current.getVelocity();
+			current.setCenterX(current.getCenterX() + velocity.getX());
+			current.setCenterY(current.getCenterY() + velocity.getY());
+			
+		}
+		//move projectiles
+		for (Projectile current: myProjectiles) {
+			current.setCenterY(current.getCenterY() - current.getSpeed());
+		}
+
+		// move the Earth
+		if (myEarth!= null) 
+			myEarth.setCenterY(myEarth.getCenterY() + myEarth.getSpeed());
+	}
+
+	/**
+	 * 
+	 */
+	public void generateObjects() {
+		if (t.isTimeForEarth(myCounter))
+			generateEarth();
+		if (myEarth==null) {
+			if (t.isTimeForEnemy(myCounter)) {
+				generateBasicEnemy();
+				generateAdvancedEnemy();
+			}
+		}
 	}
 
 
@@ -115,13 +161,19 @@ public class BreadFirstSearch {
 		KeyCode keyCode = e.getCode();
 		if (keyCode == KeyCode.RIGHT) {
 			// make this player speed!
-			myPlayer.setTranslateX(myPlayer.getTranslateX()  + myPlayer.getSpeed());
+			myPlayer.setCenterX( myPlayer.getCenterX() + myPlayer.getSpeed());
 		}
 		else if (keyCode == KeyCode.LEFT) {
-			myPlayer.setTranslateX(myPlayer.getTranslateX() - myPlayer.getSpeed());
+			myPlayer.setCenterX( myPlayer.getCenterX() - myPlayer.getSpeed());
 		}
 		else if (keyCode == KeyCode.SPACE) {
 			fireProjectile();
+		}
+		else if (keyCode == KeyCode.SHIFT) {
+			myPlayer.toggleInvincibility();
+		}
+		else if (keyCode == KeyCode.TAB) {
+			//toggle projectile invincibility
 		}
 
 	}
@@ -140,31 +192,34 @@ public class BreadFirstSearch {
 	private void checkCollide (GameObject first, GameObject second) {
 		// check for collision
 		if (first.getBoundsInParent().intersects(second.getBoundsInParent())) {
-			first.kill();
-			second.kill();
+			if (!first.IS_INVINCIBLE)
+				first.kill();
+			if (!second.IS_INVINCIBLE)
+				second.kill();
 
 		}
 
 	}
-	/**
-	 * Return true every three seconds
-	 * @param counter
-	 * @return
-	 */
-	public boolean isTimeForEnemy(int counter) {
-		//how to use num frames per second?
-		if (counter%30 == 0)
-			return true;
-		return false;
+
+	public void generateEarth() {
+		myEarth = new Earth((int) myScene.getWidth(),(int) myScene.getHeight());
+		myRoot.getChildren().add(myEarth);
 	}
 
 	/**
 	 * 
 	 */
-	public void generateEnemy() {
+	public void generateBasicEnemy() {
 		BasicEnemy temp = new BasicEnemy(generateRandom( (int) myScene.getWidth()),0);
 		myRoot.getChildren().add(temp);
-		myEnemies.add(temp);
+		myBasicEnemies.add(temp);
+	}
+	
+	public void generateAdvancedEnemy() {
+		Point2D tempPoint = new Point2D((double)generateRandom((int) myScene.getWidth()),0);
+		AdvancedEnemy tempEnemy = new AdvancedEnemy(tempPoint);
+		myRoot.getChildren().add(tempEnemy);
+		myAdvancedEnemies.add(tempEnemy);
 	}
 
 	public int generateRandom(int input) {
@@ -172,7 +227,7 @@ public class BreadFirstSearch {
 	}
 
 	public void killOffScreenObjects() {
-		for (BasicEnemy current: myEnemies)
+		for (BasicEnemy current: myBasicEnemies)
 			if (isOffScreen(current))
 				current.kill();
 		for (Projectile current: myProjectiles)
@@ -191,6 +246,7 @@ public class BreadFirstSearch {
 		myProjectiles.add(temp);
 		myRoot.getChildren().add(temp);
 	}
+
 }
 
 

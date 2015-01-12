@@ -6,7 +6,7 @@ public class Projectile extends GameObject {
 	
 	
 	public Projectile(int XPosition,int YPosition) {
-		SIZE = 5;
+		SIZE = 2;
 		SPEED = 20;
 		COLOR = Color.WHITE;
 		setRadius(SIZE);

@@ -5,7 +5,7 @@ import javafx.scene.shape.Circle;
 public class Player extends GameObject {
 	
 	Player() {
-		SIZE = 20;
+		SIZE = 10;
 		SPEED = 20;
 		COLOR = Color.RED;
 		setRadius(SIZE);
@@ -16,7 +16,7 @@ public class Player extends GameObject {
 	}
 	
 	Player(int XPosition,int YPosition) {
-		SIZE = 20;
+		SIZE = 10;
 		SPEED = 20;
 		COLOR = Color.RED;
 		setRadius(SIZE);
