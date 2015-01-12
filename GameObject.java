@@ -1,10 +1,11 @@
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
 
-public class GameObject extends Circle {
+public class GameObject extends ImageView {
 	protected int SPEED;
 	protected int SIZE;
 	protected Color COLOR;
@@ -49,6 +50,22 @@ public class GameObject extends Circle {
 	
 	public Point2D getLocation() {
 		return new Point2D((float) this.getCenterX(),(float) this.getCenterY());
+	}
+	
+	public int getCenterX() {
+		return (int) getX();
+	}
+	
+	public int getCenterY() {
+		return (int) getY();
+	}
+	
+	public void setCenterX(double d) {
+		setX((double)d);
+	}
+
+	public void setCenterY(double d) {
+		setY((double)d);
 	}
 	
 	public int getID() {

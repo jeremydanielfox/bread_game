@@ -7,10 +7,10 @@ public class Bread extends GameObject {
 		SIZE = 5;
 		SPEED = 5;
 		COLOR = Color.ORANGE;
-		setRadius(SIZE);
+		//setRadius(SIZE);
 		setCenterX(XPosition);
 		setCenterY(YPosition);
-		setFill(COLOR);
+	//	setFill(COLOR);
 		
 	}
 }

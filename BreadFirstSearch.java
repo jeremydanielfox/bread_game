@@ -8,6 +8,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -30,11 +31,12 @@ public class BreadFirstSearch {
 	private Collection<BasicEnemy> myBasicEnemies = new CopyOnWriteArrayList<BasicEnemy>();
 	private Collection<AdvancedEnemy> myAdvancedEnemies = new CopyOnWriteArrayList<AdvancedEnemy>();
 	private Collection<Projectile> myProjectiles = new CopyOnWriteArrayList<Projectile>();
-	
+
 	private Random myRandom = new Random();
-	private boolean isGameOver = false;
+	private boolean isLevelOneOver = false;
+	private boolean isLevelTwoOver = false;
 	private Timers t = new Timers();
-	
+
 
 
 	/**
@@ -88,11 +90,26 @@ public class BreadFirstSearch {
 		for (BasicEnemy current: myBasicEnemies) {
 			checkCollide(myPlayer,current);
 		}
+		for (AdvancedEnemy current: myAdvancedEnemies) {
+			checkCollide(myPlayer,current);
+		}
 		for (BasicEnemy currentEnemy: myBasicEnemies) {
 			for (Projectile currentProjectile: myProjectiles) {
 				checkCollide(currentEnemy,currentProjectile);
 			}
 		}
+		for (AdvancedEnemy currentEnemy: myAdvancedEnemies) {
+			for (Projectile currentProjectile: myProjectiles) {
+				checkCollide(currentEnemy,currentProjectile);
+			}
+		}
+		if (myEarth!=null)
+			if (myPlayer.getBoundsInParent().intersects(myEarth.getBoundsInParent())) {
+				if (!isLevelOneOver)
+					isLevelOneOver=true;
+				else if (!isLevelTwoOver)
+					isLevelTwoOver=true;
+			}
 	}
 
 	/**
@@ -103,6 +120,11 @@ public class BreadFirstSearch {
 			if (current.isDead()) {
 				myRoot.getChildren().remove(current);
 				myBasicEnemies.remove(current);
+			}
+		for (AdvancedEnemy current: myAdvancedEnemies)
+			if (current.isDead()) {
+				myRoot.getChildren().remove(current);
+				myAdvancedEnemies.remove(current);
 			}
 		for (Projectile current: myProjectiles) 
 			if (current.isDead()) {
@@ -127,7 +149,7 @@ public class BreadFirstSearch {
 			Point2D velocity = current.getVelocity();
 			current.setCenterX(current.getCenterX() + velocity.getX());
 			current.setCenterY(current.getCenterY() + velocity.getY());
-			
+
 		}
 		//move projectiles
 		for (Projectile current: myProjectiles) {
@@ -214,7 +236,7 @@ public class BreadFirstSearch {
 		myRoot.getChildren().add(temp);
 		myBasicEnemies.add(temp);
 	}
-	
+
 	public void generateAdvancedEnemy() {
 		Point2D tempPoint = new Point2D((double)generateRandom((int) myScene.getWidth()),0);
 		AdvancedEnemy tempEnemy = new AdvancedEnemy(tempPoint);
@@ -228,6 +250,9 @@ public class BreadFirstSearch {
 
 	public void killOffScreenObjects() {
 		for (BasicEnemy current: myBasicEnemies)
+			if (isOffScreen(current))
+				current.kill();
+		for (AdvancedEnemy current: myAdvancedEnemies)
 			if (isOffScreen(current))
 				current.kill();
 		for (Projectile current: myProjectiles)
@@ -246,7 +271,7 @@ public class BreadFirstSearch {
 		myProjectiles.add(temp);
 		myRoot.getChildren().add(temp);
 	}
-
+	
 }
 
 

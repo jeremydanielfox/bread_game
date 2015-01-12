@@ -1,18 +1,24 @@
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
 public class Projectile extends GameObject {
 	
-	
+	Image img = new Image("Images/bullet.jpg");
 	public Projectile(int XPosition,int YPosition) {
-		SIZE = 2;
+		SIZE = 20;
 		SPEED = 20;
 		COLOR = Color.WHITE;
-		setRadius(SIZE);
+		setImage(img);
+
+		setFitHeight(SIZE);
+		setFitWidth(SIZE);
+		preserveRatioProperty();
+		//setRadius(SIZE);
 		setCenterX(XPosition);
 		setCenterY(YPosition);
-		setFill(COLOR);
+		//setFill(COLOR);
 		IS_DEAD = false;
 	}
 
