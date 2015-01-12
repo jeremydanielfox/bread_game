@@ -1,7 +1,11 @@
+import java.util.Collection;
+import java.util.Random;
+
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 
 
@@ -12,6 +16,7 @@ public class GameObject extends ImageView {
 	protected boolean IS_DEAD = false;
 	protected boolean IS_INVINCIBLE = false;
 	protected int ID;
+	private Random myRandom = new Random();
 	
 	public GameObject() {
 		
@@ -53,11 +58,11 @@ public class GameObject extends ImageView {
 	}
 	
 	public int getCenterX() {
-		return (int) getX();
+		return (int) getX();// + (int) getFitWidth()/2;
 	}
 	
 	public int getCenterY() {
-		return (int) getY();
+		return (int) getY();// + (int) getFitHeight()/2;
 	}
 	
 	public void setCenterX(double d) {
@@ -68,12 +73,16 @@ public class GameObject extends ImageView {
 		setY((double)d);
 	}
 	
-	public int getID() {
-		return ID;
+	public void generate(Collection<GameObject> myCollection, Group myRoot, Scene myScene) {
+		BasicEnemy temp = new BasicEnemy(generateRandom( (int) myScene.getWidth()),0);
+		myRoot.getChildren().add(temp);
+		myCollection.add(temp);
 	}
+
+	public int generateRandom(int input) {
+			return myRandom.nextInt(input) + 1;
+		}
 	
-	public void setID(int id) {
-		ID = id;
-	}
+	 
 	
 }

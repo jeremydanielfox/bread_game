@@ -28,9 +28,9 @@ public class BreadFirstSearch {
 	private Group myRoot;
 	private Player myPlayer;
 	private Earth myEarth;
-	private Collection<BasicEnemy> myBasicEnemies = new CopyOnWriteArrayList<BasicEnemy>();
+	private Collection<GameObject> myBasicEnemies = new CopyOnWriteArrayList<GameObject>();
 	private Collection<AdvancedEnemy> myAdvancedEnemies = new CopyOnWriteArrayList<AdvancedEnemy>();
-	private Collection<Projectile> myProjectiles = new CopyOnWriteArrayList<Projectile>();
+	private Collection<GameObject> myProjectiles = new CopyOnWriteArrayList<GameObject>();
 
 	private Random myRandom = new Random();
 	private boolean isLevelOneOver = false;
@@ -87,19 +87,19 @@ public class BreadFirstSearch {
 	 * 
 	 */
 	public void checkAllCollisions() {
-		for (BasicEnemy current: myBasicEnemies) {
+		for (GameObject current: myBasicEnemies) {
 			checkCollide(myPlayer,current);
 		}
 		for (AdvancedEnemy current: myAdvancedEnemies) {
 			checkCollide(myPlayer,current);
 		}
-		for (BasicEnemy currentEnemy: myBasicEnemies) {
-			for (Projectile currentProjectile: myProjectiles) {
+		for (GameObject currentEnemy: myBasicEnemies) {
+			for (GameObject currentProjectile: myProjectiles) {
 				checkCollide(currentEnemy,currentProjectile);
 			}
 		}
 		for (AdvancedEnemy currentEnemy: myAdvancedEnemies) {
-			for (Projectile currentProjectile: myProjectiles) {
+			for (GameObject currentProjectile: myProjectiles) {
 				checkCollide(currentEnemy,currentProjectile);
 			}
 		}
@@ -116,7 +116,7 @@ public class BreadFirstSearch {
 	 * 
 	 */
 	public void cleanUpDeadSprites() {
-		for (BasicEnemy current: myBasicEnemies)
+		for (GameObject current: myBasicEnemies)
 			if (current.isDead()) {
 				myRoot.getChildren().remove(current);
 				myBasicEnemies.remove(current);
@@ -126,7 +126,7 @@ public class BreadFirstSearch {
 				myRoot.getChildren().remove(current);
 				myAdvancedEnemies.remove(current);
 			}
-		for (Projectile current: myProjectiles) 
+		for (GameObject current: myProjectiles) 
 			if (current.isDead()) {
 				myRoot.getChildren().remove(current);
 				myProjectiles.remove(current);
@@ -140,9 +140,8 @@ public class BreadFirstSearch {
 	 * 
 	 */
 	public void moveObjects() {
-		for (BasicEnemy current: myBasicEnemies) {
-			current.setCenterY(current.getCenterY() + current.getSpeed());
-		}
+		moveUpOrDown(myBasicEnemies,"down");
+		moveUpOrDown(myProjectiles, "up");
 		// move advanced enemies
 		for (AdvancedEnemy current: myAdvancedEnemies) {
 			current.setDestination(myPlayer.getLocation());
@@ -152,14 +151,26 @@ public class BreadFirstSearch {
 
 		}
 		//move projectiles
-		for (Projectile current: myProjectiles) {
-			current.setCenterY(current.getCenterY() - current.getSpeed());
-		}
 
 		// move the Earth
-		if (myEarth!= null) 
-			myEarth.setCenterY(myEarth.getCenterY() + myEarth.getSpeed());
+		moveUpOrDown(myEarth,"down");
 	}
+	public void moveUpOrDown(Collection<GameObject> myList, String input) {
+		if (input.equals("up"))
+			for (GameObject current: myList)
+				current.setCenterY(current.getCenterY() - current.getSpeed());
+		else if (input.equals("down"))
+			for (GameObject current: myList) 
+				current.setCenterY(current.getCenterY() + current.getSpeed());
+	}
+	
+	public void moveUpOrDown(GameObject myObject, String input) {
+		if (myObject!=null && input.equals("up"))
+				myObject.setCenterY(myObject.getCenterY() - myObject.getSpeed());
+		else if (myObject!=null && input.equals("down"))
+				myObject.setCenterY(myObject.getCenterY() + myObject.getSpeed());
+	}
+	
 
 	/**
 	 * 
@@ -195,7 +206,7 @@ public class BreadFirstSearch {
 			myPlayer.toggleInvincibility();
 		}
 		else if (keyCode == KeyCode.TAB) {
-			//toggle projectile invincibility
+			killAllEnemies();
 		}
 
 	}
@@ -249,13 +260,13 @@ public class BreadFirstSearch {
 	}
 
 	public void killOffScreenObjects() {
-		for (BasicEnemy current: myBasicEnemies)
+		for (GameObject current: myBasicEnemies)
 			if (isOffScreen(current))
 				current.kill();
 		for (AdvancedEnemy current: myAdvancedEnemies)
 			if (isOffScreen(current))
 				current.kill();
-		for (Projectile current: myProjectiles)
+		for (GameObject current: myProjectiles)
 			if (isOffScreen(current))
 				current.kill();
 	}
@@ -270,6 +281,27 @@ public class BreadFirstSearch {
 				(int)myPlayer.getCenterY() + (int) myPlayer.getTranslateY());
 		myProjectiles.add(temp);
 		myRoot.getChildren().add(temp);
+	}
+	//fix this!!
+	//
+	//
+	//
+	//
+	//
+	public void killAllEnemies() {
+		killAll(myBasicEnemies);
+		killAll1(myAdvancedEnemies);
+	}
+	
+	public void killAll(Collection<GameObject> myCollection) {
+		for (GameObject current:myCollection)
+			current.kill();
+	}
+	
+	public void killAll1(Collection<AdvancedEnemy> myCollection) {
+		for (AdvancedEnemy current: myCollection) 
+			current.kill();
+		
 	}
 	
 }
