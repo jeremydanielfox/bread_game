@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * This class contains all of the timers to schedule different events
  * The timers are based off of a counter that runs in the game loop the whole time
@@ -5,7 +7,7 @@
  *
  */
 public class Timers {
-
+private int LENGTH_OF_GAME = 60*60;
 	/**
 	 * Return true every three seconds
 	 * @param counter
@@ -23,7 +25,7 @@ public class Timers {
 	
 	public boolean isTimeForEarth (int counter) {
 		// set for 60 seconds
-		return counter == 10*60;
+		return counter == LENGTH_OF_GAME;
 	}
 	
 	public boolean swarmDeployDelay(int counter) {
@@ -32,6 +34,10 @@ public class Timers {
 	
 	public boolean tenSecond(int counter) {
 		return counter == 2*60;
+	}
+	
+	public boolean isTimeForBread(int counter, Random myRandom)	 {
+		return counter%60==0 && myRandom.nextInt(9)>7;
 	}
 
 }

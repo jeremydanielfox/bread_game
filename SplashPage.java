@@ -16,8 +16,8 @@ public class SplashPage {
 	public void setup(Stage stage) {
 		Group root = new Group();
 		setupText(root);
-		setupButton(stage,"Click if you are Bready for level one",150,root);
-		setupButton(stage,"Click if you are Bready for level two",250,root);
+		setupButton(stage,"Click if you are Bready for level one","Level One",150,root);
+		setupButton(stage,"Click if you are Bready for level two","Level Two",250,root);
 		Scene scene = new Scene(root, 500, 500);
 		stage.setTitle("Welcome to Bread First Search!");
 		stage.setScene(scene);
@@ -36,7 +36,7 @@ public class SplashPage {
 	 * @param stage
 	 * @return
 	 */
-	public void setupButton(Stage stage, String buttonText,int yCoord, Group root) {
+	public void setupButton(Stage stage, String buttonText,String level,int yCoord, Group root) {
 		Button btn = new Button();
 		btn.setText(buttonText);
 		btn.setTranslateX(70);
@@ -45,15 +45,15 @@ public class SplashPage {
 
 
 			public void handle(ActionEvent event) {
-				loadBreadFirstSearch(stage);
+				loadBreadFirstSearch(stage,level);
 			}
 		});
 		root.getChildren().add(btn);
 	}
-	public void loadBreadFirstSearch(Stage stage) {
+	public void loadBreadFirstSearch(Stage stage, String level) {
 		stage.setTitle("Bread First Search");
 		//create the game
-		myGame = new BreadFirstSearch();
+		myGame = new BreadFirstSearch(level);
 		Scene scene = myGame.init(stage, 500, 500);
 		stage.setScene(scene);
 		//stage.show();

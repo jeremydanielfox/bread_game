@@ -6,33 +6,23 @@ import javafx.scene.shape.Circle;
 public class Player extends GameObject {
 	Image img = new Image("Images/myPlayer.jpg");
 	Player() {
-		SIZE = 50;
-		SPEED = 20;
-//		COLOR = Color.RED;
+		setSize(50);
+		setSpeed(20);
 		setImage(img);
 
-		setFitHeight(SIZE);
-		setFitWidth(SIZE);
-		preserveRatioProperty();
-		//setRadius(SIZE);
+		setupImage();
 		setCenterX(250);
 		setCenterY(480);
-		//setFill(COLOR);
 		
 	}
 	
 	Player(int XPosition,int YPosition) {
-		SIZE = 50;
-		SPEED = 20;
-	//	COLOR = Color.RED;
+		setSize(50);
+		setSpeed(20);
 		setImage(img);
-		setFitHeight(SIZE);
-		setFitWidth(SIZE);
-		preserveRatioProperty();
-		//setRadius(SIZE);
+		setupImage();
 		setCenterX(setPlayerXPosition(XPosition));
 		setCenterY(setPlayerYPosition(YPosition));
-		//setFill(COLOR);
 	}
 	
 	
@@ -41,7 +31,7 @@ public class Player extends GameObject {
 	}
 	
 	public int setPlayerYPosition (int height) {
-		return height - SIZE;
+		return height - getSize();
 	}
 
 	

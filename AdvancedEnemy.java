@@ -7,46 +7,31 @@ public class AdvancedEnemy extends GameObject {
 	private Point2D Destination;
 	private Point2D Velocity;
 	
-	Image img = new Image("Images/advancedEnemy.png");
+	private Image img = new Image("Images/advancedEnemy.png");
 	AdvancedEnemy() {
-		SPEED = 3;
-		SIZE = 30;
-		COLOR = Color.CYAN;
-		setImage(img);
-
-		setFitHeight(SIZE);
-		setFitWidth(SIZE);
+		setSpeed(3);
+		setSize(30);
+		setupImage();
 		preserveRatioProperty();
 		
 	}
 	AdvancedEnemy(Point2D start) {
-		SPEED = 3;
-		SIZE = 30;
-		COLOR = Color.CYAN;
+		setSpeed(3);
+		setSize(30);
 		setImage(img);
 
-		setFitHeight(SIZE);
-		setFitWidth(SIZE);
-		preserveRatioProperty();
-		//setRadius(SIZE);
+		setupImage();
 		setCenterX( (int) start.getX());
 		setCenterY( (int) start.getY());
-		//setFill(COLOR);
 	}
 	
 	AdvancedEnemy(Point2D start, Point2D destination) {
-		SPEED = 10;
-		SIZE = 30;
-		COLOR = Color.CYAN;
-	//	setRadius(SIZE);
-		setImage(img);
-
-		setFitHeight(SIZE);
-		setFitWidth(SIZE);
+		setSpeed(3);
+		setSize(30);
+		setupImage();
 		preserveRatioProperty();
 		setCenterX( (int) start.getX());
 		setCenterY( (int) start.getY());
-		//setFill(COLOR);
 		Destination = destination;
 	}
 	
@@ -72,7 +57,7 @@ public class AdvancedEnemy extends GameObject {
 		double distance = CurrentLocation.distance(Destination);
 		double deltaX = Destination.getX() - CurrentLocation.getX();
 		double deltaY = Destination.getY() - CurrentLocation.getY();
-		double ratio = ((double) SPEED) / distance;
+		double ratio = ((double) getSpeed()) / distance;
 		Velocity = new Point2D((float) (ratio*deltaX),(float) (ratio*deltaY));
 	}
 	public void moveAdvancedEnemy(AdvancedEnemy current) {

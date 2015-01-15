@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -6,14 +5,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.animation.KeyFrame;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -24,22 +20,28 @@ import javafx.util.Duration;
  *
  */
 public class BreadFirstSearch {
+	private String myLevel;
 	private Scene myScene;
 	private Group myRoot;
 	private Player myPlayer;
 	private Earth myEarth;
+	private Score myScore;
+	private Collection<GameObject> myBread = new CopyOnWriteArrayList<GameObject>();
 	private Collection<GameObject> myBasicEnemies = new CopyOnWriteArrayList<GameObject>();
 	private Collection<AdvancedEnemy> myAdvancedEnemies = new CopyOnWriteArrayList<AdvancedEnemy>();
 	private Collection<GameObject> myProjectiles = new CopyOnWriteArrayList<GameObject>();
 	private Collection<Swarm> mySwarms = new CopyOnWriteArrayList<Swarm>();
 
 	private Random myRandom = new Random();
+	private boolean isWon = false;
 	private boolean isLevelOneOver = false;
 	private boolean isLevelTwoOver = false;
 	private Timers t = new Timers();
 	private AdvancedEnemy ae = new AdvancedEnemy();
 
-
+	public BreadFirstSearch(String level) {
+		myLevel = level;
+	}
 
 	/**
 	 * Create the game's scene
@@ -49,10 +51,11 @@ public class BreadFirstSearch {
 		myRoot = new Group();
 		//create the player
 		myPlayer = new Player(height, width);
-
+		//set the score
+		myScore = new Score();
 		// add the player to the scene;
 		myRoot.getChildren().add(myPlayer);
-
+		myRoot.getChildren().add(myScore.getScore());
 		myScene = new Scene(myRoot, width, height, Color.BLACK);
 		myScene.setOnKeyPressed(e -> handleKeyInput(e));
 		return myScene;
@@ -105,13 +108,11 @@ public class BreadFirstSearch {
 				checkCollide(currentEnemy,currentProjectile);
 			}
 		}
-		if (myEarth!=null)
-			if (myPlayer.getBoundsInParent().intersects(myEarth.getBoundsInParent())) {
-				if (!isLevelOneOver)
-					isLevelOneOver=true;
-				else if (!isLevelTwoOver)
-					isLevelTwoOver=true;
-			}
+		for (GameObject currentBread: myBread) {
+			checkCollide(currentBread,myPlayer);
+		}
+		if (myEarth!=null &&myPlayer.getBoundsInParent().intersects(myEarth.getBoundsInParent())) 
+			isWon = true;
 	}
 
 	/**
@@ -133,9 +134,19 @@ public class BreadFirstSearch {
 				myRoot.getChildren().remove(current);
 				myProjectiles.remove(current);
 			}
+		for (GameObject current: myBread) 
+			if (current.isDead()) {
+				myRoot.getChildren().remove(current);
+				myBread.remove(current);
+			}
 
-		if (myPlayer.isDead())
+		if (myPlayer.isDead()) {
+			SplashPage mySplashPage = new SplashPage();
+			Stage stage = (Stage) myRoot.getScene().getWindow();
+			stage.setTitle("Sorry, you failed!");
+			mySplashPage.setup(stage);
 			myRoot.getChildren().remove(myPlayer);
+		}
 	}
 
 	/**
@@ -143,6 +154,7 @@ public class BreadFirstSearch {
 	 */
 	public void moveObjects() {
 		moveUpOrDown(myBasicEnemies,"down");
+		moveUpOrDown(myBread,"down");
 		for (AdvancedEnemy current: myAdvancedEnemies) {
 			current.setDestination(myPlayer.getLocation());
 			ae.moveAdvancedEnemy(current);
@@ -154,7 +166,7 @@ public class BreadFirstSearch {
 			current.deployTopLine(myScene, myCounter, myRoot);
 		}
 	}
-   
+
 	public void moveUpOrDown(Collection<GameObject> myList, String input) {
 		if (input.equals("up"))
 			for (GameObject current: myList)
@@ -163,14 +175,14 @@ public class BreadFirstSearch {
 			for (GameObject current: myList) 
 				current.setCenterY(current.getCenterY() + current.getSpeed());
 	}
-	
+
 	public void moveUpOrDown(GameObject myObject, String input) {
 		if (myObject!=null && input.equals("up"))
-				myObject.setCenterY(myObject.getCenterY() - myObject.getSpeed());
+			myObject.setCenterY(myObject.getCenterY() - myObject.getSpeed());
 		else if (myObject!=null && input.equals("down"))
-				myObject.setCenterY(myObject.getCenterY() + myObject.getSpeed());
+			myObject.setCenterY(myObject.getCenterY() + myObject.getSpeed());
 	}
-	
+
 
 	/**
 	 * 
@@ -179,14 +191,14 @@ public class BreadFirstSearch {
 		if (t.isTimeForEarth(myCounter))
 			generateEarth();
 		if (myEarth==null) {
-			if (t.isTimeForEnemy(myCounter)) {
-				generateBasicEnemy();
-				generateAdvancedEnemy();
-			}
-//			if (t.tenSecond(myCounter)) {
-//				Swarm temp = new Swarm(5,new Point2D(myScene.getWidth()*.5,myScene.getHeight()*.5));
-//				mySwarms.add(temp);
-//			}
+			if (t.isTimeForEnemy(myCounter)) 
+				if (myLevel.equals("Level One")) 
+					generateBasicEnemy();
+
+				else
+					generateAdvancedEnemy();
+			if (t.isTimeForBread(myCounter,myRandom))
+				generateBread();;
 		}
 	}
 
@@ -229,13 +241,22 @@ public class BreadFirstSearch {
 	private void checkCollide (GameObject first, GameObject second) {
 		// check for collision
 		if (first.getBoundsInParent().intersects(second.getBoundsInParent())) {
-			if (!first.IS_INVINCIBLE)
+			if (first instanceof Bread) {
+				triggerBreadEffect();
 				first.kill();
-			if (!second.IS_INVINCIBLE)
-				second.kill();
-
+			}
+			else {
+				if (!first.isInvincible())
+					first.kill();
+				if (!second.isInvincible())
+					second.kill();
+			}
 		}
 
+	}
+
+	public void triggerBreadEffect() {
+		killAllEnemies();
 	}
 
 	public void generateEarth() {
@@ -250,6 +271,12 @@ public class BreadFirstSearch {
 		BasicEnemy temp = new BasicEnemy(generateRandom( (int) myScene.getWidth()),0);
 		myRoot.getChildren().add(temp);
 		myBasicEnemies.add(temp);
+	}
+
+	public void generateBread() {
+		Bread temp = new Bread(generateRandom((int) myScene.getWidth()), 0);
+		myRoot.getChildren().add(temp);
+		myBread.add(temp);
 	}
 
 	public void generateAdvancedEnemy() {
@@ -271,6 +298,9 @@ public class BreadFirstSearch {
 			if (isOffScreen(current))
 				current.kill();
 		for (GameObject current: myProjectiles)
+			if (isOffScreen(current))
+				current.kill();
+		for (GameObject current: myBread)
 			if (isOffScreen(current))
 				current.kill();
 	}
@@ -296,18 +326,18 @@ public class BreadFirstSearch {
 		killAll(myBasicEnemies);
 		killAll1(myAdvancedEnemies);
 	}
-	
+
 	public void killAll(Collection<GameObject> myCollection) {
 		for (GameObject current:myCollection)
 			current.kill();
 	}
-	
+
 	public void killAll1(Collection<AdvancedEnemy> myCollection) {
 		for (AdvancedEnemy current: myCollection) 
 			current.kill();
-		
+
 	}
-	
+
 }
 
 

@@ -5,35 +5,24 @@ import javafx.scene.shape.Circle;
 
 public class BasicEnemy extends GameObject  {
 	
-	Image img = new Image("Images/basicEnemy.png");
+	private Image img = new Image("Images/basicEnemy.png");
+	
 	BasicEnemy() {
-	SIZE = 30;
-	SPEED = 3;
-	COLOR = Color.BLUE;
-		//setRadius(SIZE);
+		setSize(30);
+		setSpeed(3);
 	setImage(img);
-
-	setFitHeight(SIZE);
-	setFitWidth(SIZE);
-	preserveRatioProperty();
+	setupImage();
 		setCenterX(250);
 		setCenterY(0);
-		//setFill(COLOR);
 	}
 	
 	BasicEnemy(int XPosition, int YPosition) {
-		SIZE = 30;
-		SPEED = 3;
-		COLOR = Color.BLUE;
+		setSize(30);
+		setSpeed(3);
 		setImage(img);
-
-		setFitHeight(SIZE);
-		setFitWidth(SIZE);
-		preserveRatioProperty();
-		//setRadius(SIZE);
+		setupImage();
 		setCenterX(XPosition);
 		setCenterY(YPosition);
-		//setFill(COLOR);
 	}
 
 }

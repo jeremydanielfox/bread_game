@@ -4,18 +4,18 @@ import java.util.Random;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 
 
 public class GameObject extends ImageView {
-	protected int SPEED;
-	protected int SIZE;
-	protected Color COLOR;
-	protected boolean IS_DEAD = false;
-	protected boolean IS_INVINCIBLE = false;
-	protected int ID;
+	private int SPEED;
+	private int SIZE;
+	private boolean IS_DEAD = false;
+	private boolean IS_INVINCIBLE = false;
+	private Image img;
 	private Random myRandom = new Random();
 	
 	public GameObject() {
@@ -23,9 +23,20 @@ public class GameObject extends ImageView {
 	}
 	
 	public int getSpeed() {
-		return SPEED;
+		return this.SPEED;
 	}
 	
+	public void setSpeed(int speed) {
+		this.SPEED = speed;
+	}
+	
+	public int getSize() {
+		return SIZE;
+	}
+	
+	public void setSize(int size) {
+		this.SIZE = size;
+	}
 	public boolean isDead() {
 		return IS_DEAD;
 	}
@@ -53,6 +64,10 @@ public class GameObject extends ImageView {
 		IS_DEAD = true;
 	}
 	
+	public void revive() {
+		IS_DEAD = false;
+	}
+	
 	public Point2D getLocation() {
 		return new Point2D((float) this.getCenterX(),(float) this.getCenterY());
 	}
@@ -77,6 +92,12 @@ public class GameObject extends ImageView {
 		BasicEnemy temp = new BasicEnemy(generateRandom( (int) myScene.getWidth()),0);
 		myRoot.getChildren().add(temp);
 		myCollection.add(temp);
+	}
+	
+	public void setupImage()	{
+		setFitHeight(this.SIZE);
+		setFitWidth(this.SIZE);
+		preserveRatioProperty();
 	}
 
 	public int generateRandom(int input) {

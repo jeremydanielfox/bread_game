@@ -1,16 +1,15 @@
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 
 public class Bread extends GameObject {
-	
+	Image img = new Image("Images/breadSlice.jpg");
 	Bread(int XPosition, int YPosition) {
-		SIZE = 5;
-		SPEED = 5;
-		COLOR = Color.ORANGE;
-		//setRadius(SIZE);
+		setSize(50);
+		setSpeed(3);
+		setImage(img);
+		setupImage();
 		setCenterX(XPosition);
 		setCenterY(YPosition);
-	//	setFill(COLOR);
-		
 	}
 }
