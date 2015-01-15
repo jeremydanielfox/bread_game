@@ -17,31 +17,41 @@ public class Main extends Application {
 	private static final int NUM_FRAMES_PER_SECOND = 60;
 	private BreadFirstSearch myGame;
 
+
 	/**
 	 * Set things up at the beginning
 	 */
 	@Override
-	public void start(Stage primaryStage) {
-		//Text myLabel = new Text("test");
-		Button btn = new Button();
-		btn.setText("Click if you are Bready");
-		btn.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				loadBreadFirstSearch(stage);
-			}
-		});
-
-		StackPane root = new StackPane();
-		root.getChildren().add(btn);
-		//root.getChildren().add(myLabel);
-
-		Scene scene = new Scene(root, 500, 500);
-
-		primaryStage.setTitle("Welcome to Bread First Search!");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+	public void start(Stage stage) {
+	stage.setTitle("Welcome to Bread First Search!");
+//		Menu myMenu = new Menu();
+//		Scene scene = myMenu.init(stage, 500,500);
+//		stage.setScene(scene);
+//		stage.show();
+//		
+	SplashPage current = new SplashPage();
+	current.setup(stage);
+//		Text myLabel = new Text(50,50,"test");
+//		//myLabel.setLayoutX(100);
+//		Button btn = new Button();
+//		btn.setText("Click if you are Bready");
+//		btn.setOnAction(new EventHandler<ActionEvent>() {
+//
+//			@Override
+//			public void handle(ActionEvent event) {
+//				loadBreadFirstSearch(primaryStage);
+//			}
+//		});
+//
+//		Group root = new Group();
+//		root.getChildren().add(btn);
+//		root.getChildren().add(myLabel);
+//
+//		Scene scene = new Scene(root, 500, 500);
+//
+//		primaryStage.setTitle("Welcome to Bread First Search!");
+//		primaryStage.setScene(scene);
+//		primaryStage.show();
 
 	}
 
@@ -54,7 +64,7 @@ public class Main extends Application {
 		myGame = new BreadFirstSearch();
 		Scene scene = myGame.init(stage, 500, 500);
 		stage.setScene(scene);
-		stage.show();
+		//stage.show();
 
 		//setup the game's loop
 		KeyFrame frame = myGame.start(NUM_FRAMES_PER_SECOND);
@@ -67,6 +77,5 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	Stage stage = new Stage();
 
 }

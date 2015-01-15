@@ -8,6 +8,17 @@ public class AdvancedEnemy extends GameObject {
 	private Point2D Velocity;
 	
 	Image img = new Image("Images/advancedEnemy.png");
+	AdvancedEnemy() {
+		SPEED = 3;
+		SIZE = 30;
+		COLOR = Color.CYAN;
+		setImage(img);
+
+		setFitHeight(SIZE);
+		setFitWidth(SIZE);
+		preserveRatioProperty();
+		
+	}
 	AdvancedEnemy(Point2D start) {
 		SPEED = 3;
 		SIZE = 30;
@@ -63,5 +74,10 @@ public class AdvancedEnemy extends GameObject {
 		double deltaY = Destination.getY() - CurrentLocation.getY();
 		double ratio = ((double) SPEED) / distance;
 		Velocity = new Point2D((float) (ratio*deltaX),(float) (ratio*deltaY));
+	}
+	public void moveAdvancedEnemy(AdvancedEnemy current) {
+		Point2D velocity = current.getVelocity();
+		current.setCenterX(current.getCenterX() + velocity.getX());
+		current.setCenterY(current.getCenterY() + velocity.getY());
 	}
 }

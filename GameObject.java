@@ -58,19 +58,19 @@ public class GameObject extends ImageView {
 	}
 	
 	public int getCenterX() {
-		return (int) getX();// + (int) getFitWidth()/2;
+		return (int) getX() + (int) getFitWidth()/2;
 	}
 	
 	public int getCenterY() {
-		return (int) getY();// + (int) getFitHeight()/2;
+		return (int) getY() + (int) getFitHeight()/2;
 	}
 	
 	public void setCenterX(double d) {
-		setX((double)d);
+		setX((double)d - (int) getFitWidth()/2);
 	}
 
 	public void setCenterY(double d) {
-		setY((double)d);
+		setY((double)d- (int) getFitHeight()/2);
 	}
 	
 	public void generate(Collection<GameObject> myCollection, Group myRoot, Scene myScene) {

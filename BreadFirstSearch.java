@@ -31,11 +31,13 @@ public class BreadFirstSearch {
 	private Collection<GameObject> myBasicEnemies = new CopyOnWriteArrayList<GameObject>();
 	private Collection<AdvancedEnemy> myAdvancedEnemies = new CopyOnWriteArrayList<AdvancedEnemy>();
 	private Collection<GameObject> myProjectiles = new CopyOnWriteArrayList<GameObject>();
+	private Collection<Swarm> mySwarms = new CopyOnWriteArrayList<Swarm>();
 
 	private Random myRandom = new Random();
 	private boolean isLevelOneOver = false;
 	private boolean isLevelTwoOver = false;
 	private Timers t = new Timers();
+	private AdvancedEnemy ae = new AdvancedEnemy();
 
 
 
@@ -141,20 +143,18 @@ public class BreadFirstSearch {
 	 */
 	public void moveObjects() {
 		moveUpOrDown(myBasicEnemies,"down");
-		moveUpOrDown(myProjectiles, "up");
-		// move advanced enemies
 		for (AdvancedEnemy current: myAdvancedEnemies) {
 			current.setDestination(myPlayer.getLocation());
-			Point2D velocity = current.getVelocity();
-			current.setCenterX(current.getCenterX() + velocity.getX());
-			current.setCenterY(current.getCenterY() + velocity.getY());
+			ae.moveAdvancedEnemy(current);
 
 		}
-		//move projectiles
-
-		// move the Earth
+		moveUpOrDown(myProjectiles, "up");
 		moveUpOrDown(myEarth,"down");
+		for (Swarm current: mySwarms) {
+			current.deployTopLine(myScene, myCounter, myRoot);
+		}
 	}
+   
 	public void moveUpOrDown(Collection<GameObject> myList, String input) {
 		if (input.equals("up"))
 			for (GameObject current: myList)
@@ -183,6 +183,10 @@ public class BreadFirstSearch {
 				generateBasicEnemy();
 				generateAdvancedEnemy();
 			}
+//			if (t.tenSecond(myCounter)) {
+//				Swarm temp = new Swarm(5,new Point2D(myScene.getWidth()*.5,myScene.getHeight()*.5));
+//				mySwarms.add(temp);
+//			}
 		}
 	}
 

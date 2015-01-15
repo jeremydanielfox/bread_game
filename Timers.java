@@ -23,9 +23,15 @@ public class Timers {
 	
 	public boolean isTimeForEarth (int counter) {
 		// set for 60 seconds
-		if (counter == 60*60)
-			return true;
-		return false;
+		return counter == 10*60;
+	}
+	
+	public boolean swarmDeployDelay(int counter) {
+		return counter%60==0;
+	}
+	
+	public boolean tenSecond(int counter) {
+		return counter == 2*60;
 	}
 
 }
