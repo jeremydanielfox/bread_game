@@ -9,29 +9,17 @@ public class AdvancedEnemy extends GameObject {
 	
 	private Image img = new Image("Images/advancedEnemy.png");
 	AdvancedEnemy() {
-		setSpeed(3);
-		setSize(30);
+		setSpeedAndSize(3,30);
+		setImage(img);
 		setupImage();
-		preserveRatioProperty();
 		
 	}
 	AdvancedEnemy(Point2D start) {
-		setSpeed(3);
-		setSize(30);
-		setImage(img);
-
-		setupImage();
-		setCenterX( (int) start.getX());
-		setCenterY( (int) start.getY());
+		setSpeedSizeImageXY(3,30,img,(int) start.getX(),(int) start.getY());
 	}
 	
 	AdvancedEnemy(Point2D start, Point2D destination) {
-		setSpeed(3);
-		setSize(30);
-		setupImage();
-		preserveRatioProperty();
-		setCenterX( (int) start.getX());
-		setCenterY( (int) start.getY());
+		setSpeedSizeImageXY(3,30,img,(int) start.getX(),(int) start.getY());
 		Destination = destination;
 	}
 	

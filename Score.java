@@ -13,6 +13,7 @@ public class Score {
 	Score(int initial) {
 		myCount=initial;
 		setColor();
+		setTranslate();
 	}
 	public void increaseScore(int increase) {
 		myCount +=increase;
@@ -26,5 +27,12 @@ public class Score {
 	}
 	private void setColor() {
 		myScore.setFill(Color.WHITE);
+		myScore.setTranslateX(100);
+		myScore.setTranslateY(50);
+	}
+	
+	private void setTranslate() {
+		myScore.setTranslateX(100);
+		myScore.setTranslateY(50);
 	}
 }

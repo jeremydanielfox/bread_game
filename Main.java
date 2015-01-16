@@ -6,7 +6,7 @@ public class Main extends Application {
 	/**
 	 * Send to Splash Page
 	 */
-	@Override
+	
 	public void start(Stage stage) {
 	stage.setTitle("Welcome to Bread First Search!");
 	SplashPage mySplashPage = new SplashPage();

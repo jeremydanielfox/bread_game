@@ -12,9 +12,11 @@ import javafx.stage.Stage;
 
 public class SplashPage {
 	private static final int NUM_FRAMES_PER_SECOND = 60;
+	private Stage myStage;
 	private BreadFirstSearch myGame;
 	public void setup(Stage stage) {
 		Group root = new Group();
+		myStage = stage;
 		setupText(root);
 		setupButton(stage,"Click if you are Bready for level one","Level One",150,root);
 		setupButton(stage,"Click if you are Bready for level two","Level Two",250,root);
@@ -52,15 +54,16 @@ public class SplashPage {
 	}
 	public void loadBreadFirstSearch(Stage stage, String level) {
 		stage.setTitle("Bread First Search");
+
+		Timeline animation = new Timeline();
 		//create the game
-		myGame = new BreadFirstSearch(level);
+		myGame = new BreadFirstSearch(level,stage,animation);
 		Scene scene = myGame.init(stage, 500, 500);
 		stage.setScene(scene);
 		//stage.show();
 
 		//setup the game's loop
 		KeyFrame frame = myGame.start(NUM_FRAMES_PER_SECOND);
-		Timeline animation = new Timeline();
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();

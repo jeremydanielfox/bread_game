@@ -3,23 +3,30 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
  * This represents the primary class for a game/animation
  * 
- * @author Jeremy
+ * @author Jeremy Fox
  *
  */
 public class BreadFirstSearch {
+	private Stage myStage;
+	private Timeline myAnimation;
 	private String myLevel;
 	private Scene myScene;
 	private Group myRoot;
@@ -34,13 +41,16 @@ public class BreadFirstSearch {
 
 	private Random myRandom = new Random();
 	private boolean isWon = false;
-	private boolean isLevelOneOver = false;
-	private boolean isLevelTwoOver = false;
 	private Timers t = new Timers();
+	private BasicEnemy be = new BasicEnemy();
 	private AdvancedEnemy ae = new AdvancedEnemy();
+	private Bread b = new Bread();
+	private Projectile p = new Projectile();
 
-	public BreadFirstSearch(String level) {
+	public BreadFirstSearch(String level,Stage stage,Timeline animation) {
+		myStage = stage;
 		myLevel = level;
+		myAnimation = animation;
 	}
 
 	/**
@@ -112,7 +122,7 @@ public class BreadFirstSearch {
 			checkCollide(currentBread,myPlayer);
 		}
 		if (myEarth!=null &&myPlayer.getBoundsInParent().intersects(myEarth.getBoundsInParent())) 
-			isWon = true;
+			setupButton("Congrats! You won!!","Click to go to Main Menu","This is the Victor's Screen");
 	}
 
 	/**
@@ -141,12 +151,45 @@ public class BreadFirstSearch {
 			}
 
 		if (myPlayer.isDead()) {
-			SplashPage mySplashPage = new SplashPage();
-			Stage stage = (Stage) myRoot.getScene().getWindow();
-			stage.setTitle("Sorry, you failed!");
-			mySplashPage.setup(stage);
-			myRoot.getChildren().remove(myPlayer);
+			doDeadStuff();
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public void doDeadStuff() {
+		setupButton("Looks like you failed!","Click to go to Main Menu","You failed");
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void setupButton(String textLabel, String buttonLabel, String sceneLabel) {
+		myAnimation.pause();
+		myRoot.getChildren().clear();
+		Text myLabel = new Text(50,50,textLabel);
+		myLabel.setFill(Color.WHITE);
+		myLabel.setTranslateX(myScene.getWidth()/2);
+		myLabel.setTranslateY(myScene.getHeight()/3);
+		myRoot.getChildren().add(myLabel);
+		Button btn = new Button();
+		
+		btn.setText(buttonLabel);
+		btn.setTranslateX(myScene.getWidth()/2);
+		btn.setTranslateY(myScene.getHeight()/2);
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+
+
+			public void handle(ActionEvent event) {
+				SplashPage mySplashPage = new SplashPage();
+				myStage.setTitle(sceneLabel);
+				mySplashPage.setup(myStage);
+			}
+			
+		});
+		myRoot.getChildren().add(btn);
 	}
 
 	/**
@@ -193,12 +236,13 @@ public class BreadFirstSearch {
 		if (myEarth==null) {
 			if (t.isTimeForEnemy(myCounter)) 
 				if (myLevel.equals("Level One")) 
-					generateBasicEnemy();
+					be.generate(myBasicEnemies, myRoot, myScene);
 
 				else
+					//ae.generate(myAdvancedEnemies, myRoot, myScene);
 					generateAdvancedEnemy();
 			if (t.isTimeForBread(myCounter,myRandom))
-				generateBread();;
+				b.generate(myBread, myRoot, myScene);
 		}
 	}
 
@@ -216,7 +260,7 @@ public class BreadFirstSearch {
 			myPlayer.setCenterX( myPlayer.getCenterX() - myPlayer.getSpeed());
 		}
 		else if (keyCode == KeyCode.SPACE) {
-			fireProjectile();
+			p.generate(myProjectiles, myRoot, myScene,myPlayer);
 		}
 		else if (keyCode == KeyCode.SHIFT) {
 			myPlayer.toggleInvincibility();
@@ -264,20 +308,6 @@ public class BreadFirstSearch {
 		myRoot.getChildren().add(myEarth);
 	}
 
-	/**
-	 * 
-	 */
-	public void generateBasicEnemy() {
-		BasicEnemy temp = new BasicEnemy(generateRandom( (int) myScene.getWidth()),0);
-		myRoot.getChildren().add(temp);
-		myBasicEnemies.add(temp);
-	}
-
-	public void generateBread() {
-		Bread temp = new Bread(generateRandom((int) myScene.getWidth()), 0);
-		myRoot.getChildren().add(temp);
-		myBread.add(temp);
-	}
 
 	public void generateAdvancedEnemy() {
 		Point2D tempPoint = new Point2D((double)generateRandom((int) myScene.getWidth()),0);
@@ -310,12 +340,6 @@ public class BreadFirstSearch {
 				|| input.getCenterX() > myScene.getWidth() || input.getCenterX() < 0;
 	}
 
-	public void fireProjectile() {
-		Projectile temp = new Projectile((int)myPlayer.getCenterX() + (int) myPlayer.getTranslateX(),
-				(int)myPlayer.getCenterY() + (int) myPlayer.getTranslateY());
-		myProjectiles.add(temp);
-		myRoot.getChildren().add(temp);
-	}
 	//fix this!!
 	//
 	//

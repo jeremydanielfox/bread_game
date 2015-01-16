@@ -37,6 +37,19 @@ public class GameObject extends ImageView {
 	public void setSize(int size) {
 		this.SIZE = size;
 	}
+	
+	public void setSpeedAndSize(int speed, int size) {
+		this.setSpeed(speed);
+		this.setSize(size);
+	}
+	
+	public void setSpeedSizeImageXY(int speed,int size, Image img, int x, int y) {
+		setSpeedAndSize(speed,size);
+		setImage(img);
+		setupImage();
+		setCenterX(x);
+		setCenterY(y);
+	}
 	public boolean isDead() {
 		return IS_DEAD;
 	}
@@ -89,7 +102,7 @@ public class GameObject extends ImageView {
 	}
 	
 	public void generate(Collection<GameObject> myCollection, Group myRoot, Scene myScene) {
-		BasicEnemy temp = new BasicEnemy(generateRandom( (int) myScene.getWidth()),0);
+		GameObject temp = new GameObject();
 		myRoot.getChildren().add(temp);
 		myCollection.add(temp);
 	}

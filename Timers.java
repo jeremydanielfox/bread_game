@@ -8,6 +8,7 @@ import java.util.Random;
  */
 public class Timers {
 private int LENGTH_OF_GAME = 60*60;
+private int ONE_SECOND = 60;
 	/**
 	 * Return true every three seconds
 	 * @param counter
@@ -18,7 +19,7 @@ private int LENGTH_OF_GAME = 60*60;
 	}
 	public boolean isTimeForEnemy(int counter) {
 		//how to use num frames per second?
-		if (counter%30 == 0)
+		if (counter%(ONE_SECOND/2) == 0)
 			return true;
 		return false;
 	}
@@ -29,15 +30,15 @@ private int LENGTH_OF_GAME = 60*60;
 	}
 	
 	public boolean swarmDeployDelay(int counter) {
-		return counter%60==0;
+		return counter%ONE_SECOND==0;
 	}
 	
 	public boolean tenSecond(int counter) {
-		return counter == 2*60;
+		return counter == 2*ONE_SECOND;
 	}
 	
 	public boolean isTimeForBread(int counter, Random myRandom)	 {
-		return counter%60==0 && myRandom.nextInt(9)>7;
+		return counter%ONE_SECOND==0 && myRandom.nextInt(9)>7;
 	}
 
 }
