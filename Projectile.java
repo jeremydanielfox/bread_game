@@ -8,10 +8,12 @@ import javafx.scene.shape.Circle;
 
 
 public class Projectile extends GameObject {
-	Image img = new Image("Images/bullet.jpg");
+	private Image img = new Image("Images/bullet.jpg");
+	static final int PROJECTILE_SPEED = 20;
+	static final int PROJECTILE_SIZE = 20;
 	public Projectile(){};
 	public Projectile(int XPosition,int YPosition) {
-		setSpeedSizeImageXY(20,20,img,XPosition,YPosition);
+		setSpeedSizeImageXY(PROJECTILE_SPEED,PROJECTILE_SIZE,img,XPosition,YPosition);
 	}
 	public void generate(Collection<GameObject> myCollection, Group myRoot, Scene myScene, Player myPlayer) {
 		Projectile temp = new Projectile((int)myPlayer.getCenterX(),(int)myPlayer.getCenterY());

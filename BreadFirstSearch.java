@@ -40,7 +40,6 @@ public class BreadFirstSearch {
 	private Collection<Swarm> mySwarms = new CopyOnWriteArrayList<Swarm>();
 
 	private Random myRandom = new Random();
-	private boolean isWon = false;
 	private Timers t = new Timers();
 	private BasicEnemy be = new BasicEnemy();
 	private AdvancedEnemy ae = new AdvancedEnemy();
@@ -151,17 +150,10 @@ public class BreadFirstSearch {
 			}
 
 		if (myPlayer.isDead()) {
-			doDeadStuff();
+			setupButton("Looks like you failed!","Click to go to Main Menu","You failed");
 		}
 	}
 
-	/**
-	 * 
-	 */
-	public void doDeadStuff() {
-		setupButton("Looks like you failed!","Click to go to Main Menu","You failed");
-		
-	}
 
 	/**
 	 * 

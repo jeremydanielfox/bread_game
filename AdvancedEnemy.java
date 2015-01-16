@@ -6,20 +6,22 @@ import javafx.scene.paint.Color;
 public class AdvancedEnemy extends GameObject {
 	private Point2D Destination;
 	private Point2D Velocity;
+	static final int ADVANCED_ENEMY_SPEED = 3;
+	static final int ADVANCED_ENEMY_SIZE = 30;
 	
 	private Image img = new Image("Images/advancedEnemy.png");
 	AdvancedEnemy() {
-		setSpeedAndSize(3,30);
+		setSpeedAndSize(ADVANCED_ENEMY_SPEED,ADVANCED_ENEMY_SIZE);
 		setImage(img);
 		setupImage();
 		
 	}
 	AdvancedEnemy(Point2D start) {
-		setSpeedSizeImageXY(3,30,img,(int) start.getX(),(int) start.getY());
+		setSpeedSizeImageXY(ADVANCED_ENEMY_SPEED,ADVANCED_ENEMY_SIZE,img,(int) start.getX(),(int) start.getY());
 	}
 	
 	AdvancedEnemy(Point2D start, Point2D destination) {
-		setSpeedSizeImageXY(3,30,img,(int) start.getX(),(int) start.getY());
+		setSpeedSizeImageXY(ADVANCED_ENEMY_SPEED,ADVANCED_ENEMY_SIZE,img,(int) start.getX(),(int) start.getY());
 		Destination = destination;
 	}
 	

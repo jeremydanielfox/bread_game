@@ -4,13 +4,17 @@ import javafx.scene.shape.Circle;
 
 
 public class Player extends GameObject {
-	Image img = new Image("Images/myPlayer.jpg");
+	private Image img = new Image("Images/myPlayer.jpg");
+	private int PLAYER_SPEED = 20;
+	private int PLAYER_SIZE = 50;
+	private int PLAYER_START_X = 250;
+	private int PLAYER_START_Y = 480;
 	Player() {
-		setSpeedSizeImageXY(20,50,img,250,480);
+		setSpeedSizeImageXY(PLAYER_SPEED,PLAYER_SIZE,img,PLAYER_START_X,PLAYER_START_Y);
 	}
 
 	Player(int XPosition,int YPosition) {
-		setSpeedSizeImageXY(20,50,img,setPlayerXPosition(XPosition),setPlayerYPosition(YPosition));
+		setSpeedSizeImageXY(PLAYER_SPEED,PLAYER_SIZE,img,setPlayerXPosition(XPosition),setPlayerYPosition(YPosition));
 		setCenterY(setPlayerYPosition(YPosition));
 	}
 
