@@ -1,7 +1,12 @@
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-
+/**
+ * This class contains the Advanced Enemy, which is the enemy that follows the player on screen
+ * this enemy is used in level two
+ * @author Jeremy
+ *
+ */
 
 public class AdvancedEnemy extends GameObject {
 	private Point2D Destination;

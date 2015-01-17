@@ -2,7 +2,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-
+/**
+ * This is the class for the player
+ * @author Jeremy
+ *
+ */
 public class Player extends GameObject {
 	private Image img = new Image("Images/myPlayer.jpg");
 	static final int PLAYER_SPEED = 20;

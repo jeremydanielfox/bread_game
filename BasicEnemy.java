@@ -6,7 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-
+/**
+ * this class contains the basic enemy, which falls straight down from the top of the screen. 
+ * this enemy is used in level two
+ * @author Jeremy
+ *
+ */
 public class BasicEnemy extends GameObject  {
 
 	private Image img = new Image("Images/basicEnemy.png");

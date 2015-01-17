@@ -8,7 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * This is the splash page screen, which doubles as a menu for when you win or lose
+ * @author Jeremy
+ *
+ */
 
 public class SplashPage {
 	private static final int NUM_FRAMES_PER_SECOND = 60;

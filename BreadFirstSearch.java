@@ -43,8 +43,10 @@ public class BreadFirstSearch {
 	private AdvancedEnemy ae = new AdvancedEnemy();
 	private Bread b = new Bread();
 	private Projectile p = new Projectile();
-	
+
 	private static final int TEXT_SIZE = 50;
+	private static final int BASIC_ENEMY_SCORE = 20;
+	private static final int ADVANCED_ENEMY_SCORE = 40;
 
 	public BreadFirstSearch(String level,Stage stage,Timeline animation) {
 		myStage = stage;
@@ -132,11 +134,14 @@ public class BreadFirstSearch {
 			if (current.isDead()) {
 				myRoot.getChildren().remove(current);
 				myBasicEnemies.remove(current);
+				if (!isOffScreen(current))
+					increaseScore(current,BASIC_ENEMY_SCORE);
 			}
 		for (AdvancedEnemy current: myAdvancedEnemies)
 			if (current.isDead()) {
 				myRoot.getChildren().remove(current);
 				myAdvancedEnemies.remove(current);
+				increaseScore(current,ADVANCED_ENEMY_SCORE);
 			}
 		for (GameObject current: myProjectiles) 
 			if (current.isDead()) {
@@ -154,6 +159,14 @@ public class BreadFirstSearch {
 		}
 	}
 
+	/**
+	 * @param current
+	 */
+	public void increaseScore(GameObject current, int score) {
+		if (!isOffScreen(current))
+			myScore.increaseScore(score);
+	}
+
 
 	/**
 	 * 
@@ -167,7 +180,7 @@ public class BreadFirstSearch {
 		myLabel.setTranslateY(myScene.getHeight()/3);
 		myRoot.getChildren().add(myLabel);
 		Button btn = new Button();
-		
+
 		btn.setText(buttonLabel);
 		btn.setTranslateX(myScene.getWidth()/2);
 		btn.setTranslateY(myScene.getHeight()/2);
@@ -179,7 +192,7 @@ public class BreadFirstSearch {
 				myStage.setTitle(sceneLabel);
 				mySplashPage.setup(myStage);
 			}
-			
+
 		});
 		myRoot.getChildren().add(btn);
 	}
@@ -301,16 +314,19 @@ public class BreadFirstSearch {
 	}
 
 	public void killOffScreenObjects() {
-		for (GameObject current: myBasicEnemies)
-			if (isOffScreen(current))
-				current.kill();
+		killOffScreenList(myBasicEnemies);
+		killOffScreenList(myProjectiles);
+		killOffScreenList(myBread);
 		for (AdvancedEnemy current: myAdvancedEnemies)
 			if (isOffScreen(current))
 				current.kill();
-		for (GameObject current: myProjectiles)
-			if (isOffScreen(current))
-				current.kill();
-		for (GameObject current: myBread)
+	}
+
+	/**
+	 * 
+	 */
+	public void killOffScreenList(Collection<GameObject> myList) {
+		for (GameObject current: myList)
 			if (isOffScreen(current))
 				current.kill();
 	}
@@ -320,23 +336,17 @@ public class BreadFirstSearch {
 				|| input.getCenterX() > myScene.getWidth() || input.getCenterX() < 0;
 	}
 
-	//fix this!!
-	//
-	//
-	//
-	//
-	//
 	public void killAllEnemies() {
-		killAll(myBasicEnemies);
-		killAll1(myAdvancedEnemies);
+		killAllBasic(myBasicEnemies);
+		killAllAdvanced(myAdvancedEnemies);
 	}
 
-	public void killAll(Collection<GameObject> myCollection) {
+	public void killAllBasic(Collection<GameObject> myCollection) {
 		for (GameObject current:myCollection)
 			current.kill();
 	}
 
-	public void killAll1(Collection<AdvancedEnemy> myCollection) {
+	public void killAllAdvanced(Collection<AdvancedEnemy> myCollection) {
 		for (AdvancedEnemy current: myCollection) 
 			current.kill();
 

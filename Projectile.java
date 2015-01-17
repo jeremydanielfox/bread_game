@@ -5,7 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
+/**
+ * This is the projectile class, for the projectiles that the player can shoot
+ * @author Jeremy
+ *
+ */
 
 public class Projectile extends GameObject {
 	private Image img = new Image("Images/bullet.jpg");
