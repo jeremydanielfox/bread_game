@@ -12,15 +12,23 @@ import javafx.stage.Stage;
 
 public class SplashPage {
 	private static final int NUM_FRAMES_PER_SECOND = 60;
+	private static final int STAGE_WIDTH = 500;
+	private static final int STAGE_HEIGHT = 500;
+	private static final int TRANSLATE_X = 70;
+	private static final int TRANSLATE_Y_ONE = 150;
+	private static final int TRANSLATE_Y_TWO = 250;
+	private static final int TRANSLATE_TEXT_X = 100;
+	private static final int TRANSLATE_TEXT_Y = 50;
+	private static final int TEXT_SIZE = 50;
 	private Stage myStage;
 	private BreadFirstSearch myGame;
 	public void setup(Stage stage) {
 		Group root = new Group();
 		myStage = stage;
 		setupText(root);
-		setupButton(stage,"Click if you are Bready for level one","Level One",150,root);
-		setupButton(stage,"Click if you are Bready for level two","Level Two",250,root);
-		Scene scene = new Scene(root, 500, 500);
+		setupButton(stage,"Click if you are Bready for level one","Level One",TRANSLATE_Y_ONE,root);
+		setupButton(stage,"Click if you are Bready for level two","Level Two",TRANSLATE_Y_TWO,root);
+		Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
 		stage.setTitle("Welcome to Bread First Search!");
 		stage.setScene(scene);
 		stage.show();
@@ -29,9 +37,9 @@ public class SplashPage {
 	 * @return
 	 */
 	public void setupText(Group root) {
-		Text myLabel = new Text(50,50,"Help Madeline make it back to Earth!");
-		myLabel.setTranslateX(100);
-		myLabel.setTranslateY(50);
+		Text myLabel = new Text(TEXT_SIZE,TEXT_SIZE,"Help Madeline make it back to Earth!");
+		myLabel.setTranslateX(TRANSLATE_TEXT_X);
+		myLabel.setTranslateY(TRANSLATE_TEXT_Y);
 		root.getChildren().add(myLabel);
 	}
 	/**
@@ -41,7 +49,7 @@ public class SplashPage {
 	public void setupButton(Stage stage, String buttonText,String level,int yCoord, Group root) {
 		Button btn = new Button();
 		btn.setText(buttonText);
-		btn.setTranslateX(70);
+		btn.setTranslateX(TRANSLATE_X);
 		btn.setTranslateY(yCoord);
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -58,7 +66,7 @@ public class SplashPage {
 		Timeline animation = new Timeline();
 		//create the game
 		myGame = new BreadFirstSearch(level,stage,animation);
-		Scene scene = myGame.init(stage, 500, 500);
+		Scene scene = myGame.init(stage, STAGE_WIDTH, STAGE_HEIGHT);
 		stage.setScene(scene);
 		//stage.show();
 

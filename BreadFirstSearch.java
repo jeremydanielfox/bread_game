@@ -37,14 +37,14 @@ public class BreadFirstSearch {
 	private Collection<GameObject> myBasicEnemies = new CopyOnWriteArrayList<GameObject>();
 	private Collection<AdvancedEnemy> myAdvancedEnemies = new CopyOnWriteArrayList<AdvancedEnemy>();
 	private Collection<GameObject> myProjectiles = new CopyOnWriteArrayList<GameObject>();
-	private Collection<Swarm> mySwarms = new CopyOnWriteArrayList<Swarm>();
-
 	private Random myRandom = new Random();
 	private Timers t = new Timers();
 	private BasicEnemy be = new BasicEnemy();
 	private AdvancedEnemy ae = new AdvancedEnemy();
 	private Bread b = new Bread();
 	private Projectile p = new Projectile();
+	
+	private static final int TEXT_SIZE = 50;
 
 	public BreadFirstSearch(String level,Stage stage,Timeline animation) {
 		myStage = stage;
@@ -161,7 +161,7 @@ public class BreadFirstSearch {
 	public void setupButton(String textLabel, String buttonLabel, String sceneLabel) {
 		myAnimation.pause();
 		myRoot.getChildren().clear();
-		Text myLabel = new Text(50,50,textLabel);
+		Text myLabel = new Text(TEXT_SIZE,TEXT_SIZE,textLabel);
 		myLabel.setFill(Color.WHITE);
 		myLabel.setTranslateX(myScene.getWidth()/2);
 		myLabel.setTranslateY(myScene.getHeight()/3);
@@ -197,9 +197,6 @@ public class BreadFirstSearch {
 		}
 		moveUpOrDown(myProjectiles, "up");
 		moveUpOrDown(myEarth,"down");
-		for (Swarm current: mySwarms) {
-			current.deployTopLine(myScene, myCounter, myRoot);
-		}
 	}
 
 	public void moveUpOrDown(Collection<GameObject> myList, String input) {
@@ -231,7 +228,6 @@ public class BreadFirstSearch {
 					be.generate(myBasicEnemies, myRoot, myScene);
 
 				else
-					//ae.generate(myAdvancedEnemies, myRoot, myScene);
 					generateAdvancedEnemy();
 			if (t.isTimeForBread(myCounter,myRandom))
 				b.generate(myBread, myRoot, myScene);
@@ -245,7 +241,6 @@ public class BreadFirstSearch {
 	private void handleKeyInput (KeyEvent e) {
 		KeyCode keyCode = e.getCode();
 		if (keyCode == KeyCode.RIGHT) {
-			// make this player speed!
 			myPlayer.setCenterX( myPlayer.getCenterX() + myPlayer.getSpeed());
 		}
 		else if (keyCode == KeyCode.LEFT) {
@@ -264,18 +259,11 @@ public class BreadFirstSearch {
 	}
 
 
-	/**
-	 * What to do each time the mouse is clicked
-	 */
-	private void handleMouseInput (MouseEvent e) {
-
-	}
 
 	/**
 	 * What to do each time shapes collide
 	 */
 	private void checkCollide (GameObject first, GameObject second) {
-		// check for collision
 		if (first.getBoundsInParent().intersects(second.getBoundsInParent())) {
 			if (first instanceof Bread) {
 				triggerBreadEffect();

@@ -5,10 +5,10 @@ import javafx.scene.shape.Circle;
 
 public class Player extends GameObject {
 	private Image img = new Image("Images/myPlayer.jpg");
-	private int PLAYER_SPEED = 20;
-	private int PLAYER_SIZE = 50;
-	private int PLAYER_START_X = 250;
-	private int PLAYER_START_Y = 480;
+	static final int PLAYER_SPEED = 20;
+	static final int PLAYER_SIZE = 50;
+	static final int PLAYER_START_X = 250;
+	static final int PLAYER_START_Y = 480;
 	Player() {
 		setSpeedSizeImageXY(PLAYER_SPEED,PLAYER_SIZE,img,PLAYER_START_X,PLAYER_START_Y);
 	}

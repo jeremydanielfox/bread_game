@@ -7,25 +7,20 @@ import java.util.Random;
  *
  */
 public class Timers {
-private int LENGTH_OF_GAME = 60*60;
-private int ONE_SECOND = 60;
-	/**
-	 * Return true every three seconds
-	 * @param counter
-	 * @return
-	 */
+static final int LENGTH_OF_GAME = 30*60;
+static final int ONE_SECOND = 60;
+static final int UPPER_BOUND = 9;
+static final int LOWER_BOUND = 7;
 	public void dummy() {
 		
 	}
 	public boolean isTimeForEnemy(int counter) {
-		//how to use num frames per second?
 		if (counter%(ONE_SECOND/2) == 0)
 			return true;
 		return false;
 	}
 	
 	public boolean isTimeForEarth (int counter) {
-		// set for 60 seconds
 		return counter == LENGTH_OF_GAME;
 	}
 	
@@ -38,7 +33,7 @@ private int ONE_SECOND = 60;
 	}
 	
 	public boolean isTimeForBread(int counter, Random myRandom)	 {
-		return counter%ONE_SECOND==0 && myRandom.nextInt(9)>7;
+		return counter%ONE_SECOND==0 && myRandom.nextInt(UPPER_BOUND)>LOWER_BOUND;
 	}
 
 }

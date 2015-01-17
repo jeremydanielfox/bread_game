@@ -5,6 +5,8 @@ import javafx.scene.text.Text;
 public class Score {
 	private Text myScore = new Text("0");
 	private int myCount = 0;
+	static final int TRANSLATE_X = 100;
+	static final int TRANSLATE_Y = 50;
 	
 	Score()	{
 		setColor();
@@ -26,13 +28,13 @@ public class Score {
 		myCount = count;
 	}
 	private void setColor() {
-		myScore.setFill(Color.WHITE);
-		myScore.setTranslateX(100);
-		myScore.setTranslateY(50);
+		myScore.setFill(Color.YELLOW);
+		myScore.setTranslateX(TRANSLATE_X);
+		myScore.setTranslateY(TRANSLATE_Y);
 	}
 	
 	private void setTranslate() {
-		myScore.setTranslateX(100);
-		myScore.setTranslateY(50);
+		myScore.setTranslateX(TRANSLATE_X);
+		myScore.setTranslateY(TRANSLATE_Y);
 	}
 }

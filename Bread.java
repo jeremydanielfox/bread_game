@@ -5,12 +5,18 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-
+/**
+ * this class contains Bread, which is a powerup
+ * Bread slowly falls from the top of the screen
+ * getting bread clears all enemies from screen
+ * @author Jeremy
+ *
+ */
 public class Bread extends GameObject {
 	private Image img = new Image("Images/breadSlice.jpg");
-	private int BREAD_SIZE = 3;
-	private int BREAD_SPEED = 50;
-	private int START_Y_COORD = 0;
+	static final int BREAD_SIZE = 3;
+	static final int BREAD_SPEED = 50;
+	static final int START_Y_COORD = 0;
 	Bread() {};
 	Bread(int XPosition, int YPosition) {
 		setSpeedSizeImageXY(BREAD_SIZE,BREAD_SPEED,img,XPosition,YPosition);
