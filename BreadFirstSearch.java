@@ -86,7 +86,6 @@ public class BreadFirstSearch {
 	 *
 	 * Change the sprite properties each frame by a tiny amount to animate them
 	 *
-	 * Note, there are more sophisticated ways to animate shapes, but these simple ways work too.
 	 */
 	private int myCounter = 0;
 
@@ -353,5 +352,3 @@ public class BreadFirstSearch {
 	}
 
 }
-
-

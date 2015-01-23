@@ -13,31 +13,31 @@ public class AdvancedEnemy extends GameObject {
 	private Point2D Velocity;
 	static final int ADVANCED_ENEMY_SPEED = 3;
 	static final int ADVANCED_ENEMY_SIZE = 30;
-	
+
 	private Image img = new Image("Images/advancedEnemy.png");
 	AdvancedEnemy() {
 		setSpeedAndSize(ADVANCED_ENEMY_SPEED,ADVANCED_ENEMY_SIZE);
 		setImage(img);
 		setupImage();
-		
+
 	}
 	AdvancedEnemy(Point2D start) {
 		setSpeedSizeImageXY(ADVANCED_ENEMY_SPEED,ADVANCED_ENEMY_SIZE,img,(int) start.getX(),(int) start.getY());
 	}
-	
+
 	AdvancedEnemy(Point2D start, Point2D destination) {
 		setSpeedSizeImageXY(ADVANCED_ENEMY_SPEED,ADVANCED_ENEMY_SIZE,img,(int) start.getX(),(int) start.getY());
 		Destination = destination;
 	}
-	
+
 	public void setDestination(Point2D destination) {
 		Destination = destination;
 	}
-	
+
 	public Point2D getDestination() {
 		return Destination;
 	}
-	
+
 	public Point2D getVelocity() {
 		setVelocity();
 		return Velocity;
@@ -55,6 +55,7 @@ public class AdvancedEnemy extends GameObject {
 		double ratio = ((double) getSpeed()) / distance;
 		Velocity = new Point2D((float) (ratio*deltaX),(float) (ratio*deltaY));
 	}
+
 	public void moveAdvancedEnemy(AdvancedEnemy current) {
 		Point2D velocity = current.getVelocity();
 		current.setCenterX(current.getCenterX() + velocity.getX());

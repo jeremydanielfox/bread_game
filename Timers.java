@@ -15,9 +15,7 @@ public class Timers {
 
 	}
 	public boolean isTimeForEnemy(int counter) {
-		if (counter%(ONE_SECOND/2) == 0)
-			return true;
-		return false;
+		return counter%(ONE_SECOND/2) == 0;
 	}
 
 	public boolean isTimeForEarth (int counter) {
