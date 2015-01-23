@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Jeremy Fox
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -30,35 +32,19 @@ public class AdvancedEnemy extends GameObject {
 		Destination = destination;
 	}
 
-	public void setDestination(Point2D destination) {
-		Destination = destination;
-	}
-
-	public Point2D getDestination() {
-		return Destination;
-	}
-
-	public Point2D getVelocity() {
-		setVelocity();
-		return Velocity;
-	}
+	
 	/**
 	 * Use trigonometric ratios and the properties of similar triangles to calculate 
 	 * the appropriate x and y components of a velocity that has the magnitude of the
 	 * SPEED component
 	 */
-	private void setVelocity() {
+	public void setVelocity() {
 		Point2D CurrentLocation = this.getLocation();
-		double distance = CurrentLocation.distance(Destination);
-		double deltaX = Destination.getX() - CurrentLocation.getX();
-		double deltaY = Destination.getY() - CurrentLocation.getY();
+		double distance = CurrentLocation.distance(this.getDestination());
+		double deltaX = this.getDestination().getX() - CurrentLocation.getX();
+		double deltaY = this.getDestination().getY() - CurrentLocation.getY();
 		double ratio = ((double) getSpeed()) / distance;
 		Velocity = new Point2D((float) (ratio*deltaX),(float) (ratio*deltaY));
 	}
 
-	public void moveAdvancedEnemy(AdvancedEnemy current) {
-		Point2D velocity = current.getVelocity();
-		current.setCenterX(current.getCenterX() + velocity.getX());
-		current.setCenterY(current.getCenterY() + velocity.getY());
-	}
 }

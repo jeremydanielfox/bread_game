@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Jeremy Fox
 import java.util.Collection;
 import java.util.Random;
 
@@ -6,7 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 /**
  * This is the base class from which all other game objects inherit
@@ -15,6 +16,8 @@ import javafx.scene.paint.Color;
  */
 
 public class GameObject extends ImageView {
+	private Point2D Destination;
+	private Point2D Velocity;
 	private int SPEED;
 	private int SIZE;
 	private boolean IS_DEAD = false;
@@ -118,6 +121,29 @@ public class GameObject extends ImageView {
 
 	public int generateRandom(int input) {
 		return myRandom.nextInt(input) + 1;
+	}
+	
+	public void setDestination(Point2D destination) {
+		Destination = destination;
+	}
+
+	public Point2D getDestination() {
+		return Destination;
+	}
+	
+	public void setVelocity() {
+	}
+
+	public Point2D getVelocity() {
+		setVelocity();
+		return Velocity;
+	}
+	
+
+	public void move() {
+		Point2D velocity = this.getVelocity();
+		this.setCenterX(this.getCenterX() + velocity.getX());
+		this.setCenterY(this.getCenterY() + velocity.getY());
 	}
 
 }
