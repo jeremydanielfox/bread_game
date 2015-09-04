@@ -2,9 +2,12 @@
 
 This is a simple game I made in the beginning of my software design class. Although the design of this game no longer reflects my design abilities, I'm still proud of it.
 
-How to play the game: The object is to avoid the enemies long enough to get to the Earth. You can do this by moving around on screen, or shooting the enemies down as they come toward you. Once you get to the Earth, you win.
+# Gameplay: Help Madeline make it back to Earth
 
-Keys/Mouse input: Move left and right with the arrow keys, 
+In Bread First Search, you play as Madeline, a young girl.
 
-Cheat Keys: Press Shift to toggle invincibility on and off. Press tab to clear all enemies on the screen.
+![](https://github.com/jeremydanielfox/bread_game/blob/master/Images/GIFS/BFS_Level_One.gif)
 
+![](https://github.com/jeremydanielfox/bread_game/blob/master/Images/GIFS/BFS_Level_Two.gif)
+
+![](https://github.com/jeremydanielfox/bread_game/blob/master/Images/GIFS/Madeline_to_earth.gif)
